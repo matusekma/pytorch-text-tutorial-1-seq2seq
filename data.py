@@ -1,6 +1,7 @@
-import torch
 import torchtext
 from torchtext.data.utils import get_tokenizer
+
+from model import device
 
 TEXT = torchtext.data.Field(tokenize=get_tokenizer("basic_english"),
                             init_token='<sos>',
@@ -8,7 +9,6 @@ TEXT = torchtext.data.Field(tokenize=get_tokenizer("basic_english"),
                             lower=True)
 train_txt, val_txt, test_txt = torchtext.datasets.WikiText2.splits(TEXT)
 TEXT.build_vocab(train_txt)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def batchify(data, bsz):
